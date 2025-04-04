@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bonafide Certificate Generator</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        #certificate { display: none; border: 1px solid black; padding: 20px; width: 50%; margin: auto; }
+        img { max-width: 100px; max-height: 100px; }
+    </style>
+</head>
+<body>
+    <h1>Shri Dakshinamurti Vinay Mandir</h1>
+    <h2>Bonafide Certificate Generator</h2>
+    
+    <label for="regNo">Enter General Register Number:</label>
+    <input type="text" id="regNo">
+    <button onclick="generateCertificate()">Generate</button>
+    
+    <br><br>
+    <input type="file" accept="image/*" id="photoInput" onchange="loadPhoto(event)">
+    <br><br>
+    
+    <div id="certificate">
+        <h2>Bonafide Certificate</h2>
+        <p><strong>Student Name:</strong> <span id="studentName"></span></p>
+        <p><strong>Date of Birth:</strong> <span id="dob"></span></p>
+        <p><strong>Caste:</strong> <span id="caste"></span></p>
+        <p><strong>Place of Birth:</strong> <span id="birthPlace"></span></p>
+        <p><strong>Date of Admission:</strong> <span id="admissionDate"></span></p>
+        <img id="studentPhoto" src="" alt="Student Photo">
+        <br><br>
+        <button onclick="window.print()">Print Certificate</button>
+    </div>
+    
+    <script>
+        const students = {
+            "3475": { name: "MANIYA KRUNALKUMAR NARESHBHAI", dob: "17/02/1997", caste: "GENERAL", birthPlace: "BHAVNAGAR", admissionDate: "13/06/2023" },
+            "3476": { name: "VELANI AKASH HARESHBHAI", dob: "14/05/1999", caste: "OBC", birthPlace: "AHMEDABAD", admissionDate: "14/06/2023" },
+            "3477": { name: "MANIYA URAV NARESHBHAI", dob: "26/07/2000", caste: "GENERAL", birthPlace: "AMRELI", admissionDate: "15/06/2023" },
+            "3478": { name: "PATEL BHARATBHAI VALJIBHAI", dob: "07/07/1965", caste: "SC", birthPlace: "BOTAD", admissionDate: "16/06/2023" },
+            "3479": { name: "KATARA RAMESHKUMAR DHARMAJI", dob: "01/05/1996", caste: "ST", birthPlace: "JUNAGADH", admissionDate: "17/06/2023" },
+            "3480": { name: "SHAH JAYKUMAR SOMABHAI", dob: "04/08/1963", caste: "GENERAL", birthPlace: "RAJKOT", admissionDate: "18/06/2023" }
+        };
+
+        function generateCertificate() {
+            let regNo = document.getElementById("regNo").value;
+            let student = students[regNo];
+            if (student) {
+                document.getElementById("studentName").textContent = student.name;
+                document.getElementById("dob").textContent = student.dob;
+                document.getElementById("caste").textContent = student.caste;
+                document.getElementById("birthPlace").textContent = student.birthPlace;
+                document.getElementById("admissionDate").textContent = student.admissionDate;
+                document.getElementById("certificate").style.display = "block";
+            } else {
+                alert("Student not found");
+            }
+        }
+
+        function loadPhoto(event) {
+            let reader = new FileReader();
+            reader.onload = function () {
+                document.getElementById("studentPhoto").src = reader.result;
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+</body>
+</html>
